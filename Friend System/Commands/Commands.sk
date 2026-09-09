@@ -32,7 +32,7 @@ command /testremove <player>:
 # Do not change unless you know what you're doing!!!
 
 
-command /friend <text> [<player>]:
+command /friend:
     trigger:
         if arg-1 is "add":
             if arg-1 is not set:
@@ -66,4 +66,4 @@ command /friend <text> [<player>]:
                 showFriendRequestDenyFailed(player)
         
         else:
-            send "&cUsage: /friend add|accept|deny <player>" to player
+            send "&cUsage: /friend add | accept | deny <player>" to player
