@@ -50,7 +50,7 @@ command /friend <text> [<player>]:
                 send "&cUsage: /friend accept <player>" to player
                 stop
 
-            if acceptFriendRequest(player, arg-2 is true):
+            if acceptFriendRequest(player, arg-2) is true:
                 showFriendRequestAccept(player, arg-2)
             else:
                 showFriendRequestAcceptFailed(player)
