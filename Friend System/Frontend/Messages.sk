@@ -45,7 +45,7 @@ function showFriendRemoveFailed(player: player, target: player): # Removal messa
 
 
 function showFriendRequests(player: player, requests: strings): # Show friend requests.
-    set {_message} to friendHeader("{@requests-title}")
+    set {_message} to friendHeader({@requests-title})
 
     loop {_requests::*}:
         set {_message} to "%{_message}%%nl%&f - &e%getFriendName(loop-value)%"
@@ -56,7 +56,7 @@ function showFriendRequests(player: player, requests: strings): # Show friend re
 
 
 function showFriends(player: player, friends: strings): # Packs players friend into a list and sends list.
-    set {_message} to friendHeader("{@friends-list-title}")
+    set {_message} to friendHeader({@friends-list-title})
     set {_online} to ""
     set {_offline} to ""
 
