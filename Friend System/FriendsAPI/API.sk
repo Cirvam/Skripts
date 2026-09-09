@@ -56,12 +56,12 @@ function removeFriend(player: player, target: player):: boolean: # player is com
 
 
 function getFriendName(friendUUID: string) :: string: # Fetch players, friends' uuid, return username.
-    set {_friend} to offline player from uuid {_friendUUID}
+    set {_friend} to offline player from uuid({_friendUUID})
     return name of {_friend}
 
 
 function isFriendOnline(friendUUID: string) :: boolean: # Check if player is ONLINE using their UUID. Return true if yes, false if no
-    set {_friend} to offline player from uuid {_friendUUID}
+    set {_friend} to offline player from uuid({_friendUUID})
 
     if {_friend} is online:
         return true
@@ -132,10 +132,3 @@ function getFriendRequests(player: player) :: strings: # Handles pending request
         add loop-index to {_requests::*} # Add pending uuid to list
 
     return {_requests::*} # return list
-
-
-function hasFriendRequest(sender: player, target: player) :: boolean: # Checks if request has been sent
-    if {friendRequests::%uuid of {_target}%::%uuid of {_sender}%} is true: # If target has a request from sender return true
-        return true
-
-    return false # False if target does not have a request from sender.

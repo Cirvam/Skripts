@@ -13,7 +13,7 @@ function showFriendRequestSuccess(player: player, target: player): # Notify send
     send "&aFriend request sent to %name of {_target}%!" to {_player}
 
 function showFriendRequestFailed(player: player): # Notify sender request has failed
-    send "&cFriend request failed."
+    send "&cFriend request failed." to {_player}
 
 function showFriendRequestReceived(sender: player, target: player): # Notify target a request is received.
     send "&e%name of {_sender}% &ahas sent you a friend request!" to {_target}
