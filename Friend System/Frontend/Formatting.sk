@@ -8,4 +8,4 @@
 
 
 function friendHeader(title: string) :: string:
-    return "&6&m-------%n1%&6%{_title}%%n1%&6&m-------"
+    return "&6&m-------%n1%&6%{_title}%%nl%&6&m-------"
