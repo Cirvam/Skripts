@@ -32,18 +32,38 @@ command /testremove <player>:
 # Do not change unless you know what you're doing!!!
 
 
-command /friend add <player>: # Add friend
+command /friend <text> [<player>]:
     trigger:
-        if sendFriendRequest(player, arg-1) is true:
-            showFriendRequestSent(player, arg-1)
-            showFriendRequestReceived(player,arg-1)
-        else:
-            showFriendRequestFailed(player)
+        if arg-1 is "add":
+            if arg-1 is not set:
+                send "&cUsage: /friend add <player>" to player
+                stop
+            
+            if sendFriendRequest(player, arg-2) is true:
+                showFriendRequestSent(player, arg-2)
+                showFriendRequestReceived(player, arg-2)
+            else:
+                showFriendRequestFailed(player)
 
+        else if arg-1 is "accept":
+            if arg-2 is not set:
+                send "&cUsage: /friend accept <player>" to player
+                stop
 
-command /friend accept <player>:
-    trigger:
-        if acceptFriendRequest(player, arg-1) is true:
-            showFriendRequestAccept(player, arg-1)
+            if acceptFriendRequest(player, arg-2 is true):
+                showFriendRequestAccept(player, arg-2)
+            else:
+                showFriendRequestAcceptFailed(player)
+        
+        else if arg-1 is "deny":
+            if arg-2 is not set:
+                send "&cUsage: /friend deny <player>" to player
+                stop
+
+            if denyFriendRequest(player, arg-2) is true:
+                showFriendRequestDeny(player, arg-2)
+            else:
+                showFriendRequestDenyFailed(player)
+        
         else:
-            showFriendRequestAcceptFailed(player, arg-1)
+            send "&cUsage: /friend add|accept|deny <player>" to player

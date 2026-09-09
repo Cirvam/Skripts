@@ -22,12 +22,12 @@ function showFriendRequestAccept(player: player, sender:player):
     send "&aYou accepted %name of {_sender}%'s friend request!" to {_player} # Notify player request accepted
     send "&a%name of {_player}% has accepted your friend request!" to {_sender} # Notify sender request accepted
 
-function showFriendRequestAcceptFailed(player: player, sender: player): # accept failure message
+function showFriendRequestAcceptFailed(sender: player): # accept failure message
     send "&cCould not accept friend request from %name of {_sender}%."
 
 function showFriendRequestDeny(player: player, sender: player):
-    send "&cFriend request from %name of {_sender}% declined." to player # Notify player of decline
-    send "&c%name of {_player}% has declined your friend request." to sender # notify sender of decline
+    send "&cFriend request from %name of {_sender}% declined." to {_player} # Notify player of decline
+    send "&c%name of {_player}% has declined your friend request." to {_sender} # notify sender of decline
 
 function showFriendRequestDenyFailed(player: player):
     send "&cCould not deny friend request. Something went wrong." to {_player}
