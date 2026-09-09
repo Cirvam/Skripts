@@ -1,0 +1,19 @@
+# Intialized 08/09/2026
+# Last edited 08/09/2026 by: Cirvam
+#
+# By Cirvam
+#
+#
+# Front end for all functions in friends skript. What the player sees! Using functions here so that
+# it is easier to stylize the front end messages the player sees, such as adding clickable buttons OTHER
+# fancier request messages for example, while keeping the API consistent and so it needs least amount of tweaking.
+
+
+function showFriendRequestSuccess(player: player, target: player): # Notify sender request was successfully sent
+    send "&aFriend request sent to %name of {_target}%!" to {_player}
+
+function showFriendRequestFailed(player: player): # Notify sender request has failed
+    send "&cFriend request failed."
+
+function showFriendRequestReceived(sender: player, target: player): # Notify target a request is received.
+    send "&e%name of {_sender}% &ahas sent you a friend request!" to {_target}

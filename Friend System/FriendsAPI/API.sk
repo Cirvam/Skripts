@@ -1,0 +1,141 @@
+# Intialized 08/09/2026
+# Last updated 08/09/26 by: Cirvam
+#
+# Made by Cirvam
+#
+#
+# API for Friends skript. Friends skript will be a full system to add friend function to Minecraft.
+# Includes adding friends, friend requests, accepting/denying.
+#
+# Includes main functions required which other skripts
+# will pull from. Backend slop
+
+
+
+
+######### BACKEND FUNCTIONS USUALLY USED IN OTHER FUNCTIONS ##############
+
+# Add Friends
+function addFriend(player: player, target: player) :: boolean: 
+    if {_player} is {_target}: # Return false if self
+        return false
+
+    if {friends::%uuid of {_player}%::%uuid of {_target}%} is true: # Return false if already friends
+        return false
+
+    set {friends::%uuid of {_player}%::%uuid of {_target}%} to true # Set friends to true for player
+    set {friends::%uuid of {_target}%::%uuid of {_player}%} to true # Set friends to true for target
+    
+    return true # Function returns true if successful
+
+
+
+
+# Check if Friends
+function areFriends(player: player, target: player) :: boolean: # player is sender, target is arg1
+    if {friends::%uuid of {_player}%::%uuid of {_target}%} is true: # Return true if sender and target are friends
+        return true
+
+    return false # not friends, return false
+
+
+# Remove Friends
+#function removeFriend(player: player, target: player):
+function removeFriend(player: player, target: player):: boolean: # player is command sender, target is command arg-1
+    if {_player} is {_target}: # Return false if target is self
+        return false
+    
+    if {friends::%uuid of {_player}%::%uuid of {_target}%} is not true: # Return false if not friends
+        return false
+
+    delete {friends::%uuid of {_player}%::%uuid of {_target}%} # Deletes from senders friends variable
+    delete {friends::%uuid of {_target}%::%uuid of {_player}%} # Deletes from targets friends variable
+
+    return true
+
+
+
+function getFriendName(friendUUID: string) :: string: # Fetch players, friends' uuid, return username.
+    set {_friend} to offline player from uuid {_friendUUID}
+    return name of {_friend}
+
+
+function isFriendOnline(friendUUID: string) :: boolean: # Check if player is ONLINE using their UUID. Return true if yes, false if no
+    set {_friend} to offline player from uuid {_friendUUID}
+
+    if {_friend} is online:
+        return true
+
+    return false
+
+
+###################### PLAYER INTERACTION FUNCTIONS (Mostly used in commands) ###########
+
+
+
+# Return all friends of player who ran command *** UUID FORMAT ***
+function getFriends(player: player) :: strings: # Command sender as player
+    loop {friends::%uuid of {_player}%::*}: # Loop through player's "friends" variable and add each entry to list
+        add loop-index to {_friends::*} # add to list
+
+    return {_friends::*} # Return entire list.
+
+function sendFriendRequest(player: player, target: player) :: boolean: # Send friend request from sender to target
+    if {_player} is {_target}: # If self, return false
+        return false
+        
+    if areFriends({_player}, {_target}) is true: # If already friends, return false
+        return false
+
+    if {friendRequests::%uuid of {_target}%::%uuid of {_player}%} is true: # If already pending, return false
+        return false
+
+    set {friendRequests::%uuid of {_target}%::%uuid of {_player}%} to true # Add to friendRequests (pending list) if those if statements are passed
+    return true
+
+
+    # Written with target first, because if sender sends a request, the target receives a friend request.
+    # But the sender does not have a request.
+    # sender -> target makes:  {friendRequests::targetUUID::senderUUID} = true
+    # hasFriendRequest(target, sender) returns true
+    # hasFriendRequest(sender, target) returns false
+    # Basically explaining that sender did not recieve the request therefore does not have one any, so returns false.
+function hasFriendRequest(target: player, sender: player) :: boolean: # Check pending friend request.
+    if {friendRequests::%uuid of {_target}%::%uuid of {_sender}%} is true: # If friendRequests contains uuid of target -> sender, return true
+        return true
+
+    return false # False if no friend requests.
+
+
+function acceptFriendRequest(target: player, sender: player) :: boolean: # Handles accepting friend request
+    if hasFriendRequest({_target}, {_sender}) is not true: # If no friend request from sender, stop.
+        return false
+
+    delete {friendRequests::%uuid of {_target}%::%uuid of {_sender}%} # Deletes the pending req if passes the if statement
+ 
+    if addFriend({_target}, {sender}) is not true: # Try to add as friends. If fails, return false.
+        return false
+
+    return true # Returns true on acceptFriendRequest function() Success.
+
+
+function denyFriendRequest(target: player, sender: player) :: boolean: # Handles denying friend request
+    if hasFriendRequest({_target}, {_sender}) is not true: # If request doesn't exist, return false (unsuccessful)
+        return false
+    
+    delete {friendRequests::%uuid of {_target}%::%uuid of {_sender}%} # Deletes request if request exists
+
+    return true # Return true: Success.
+
+function getFriendRequests(player: player) :: strings: # Handles pending requests
+    loop {friendRequests::%uuid of {_player}%::*}: # Loop through friendRequests
+        add loop-index to {_requests::*} # Add pending uuid to list
+
+    return {_requests::*} # return list
+
+
+function hasFriendRequest(sender: player, target: player) :: boolean: # Checks if request has been sent
+    if {friendRequests::%uuid of {_target}%::%uuid of {_sender}%} is true: # If target has a request from sender return true
+        return true
+
+    return false # False if target does not have a request from sender.
