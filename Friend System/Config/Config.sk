@@ -1,0 +1,32 @@
+# Initalized 09/09/2026
+# Last edited 09/09/2026
+#
+# By Cirvam
+#
+# This skript will handle reading and forwarding information from Config.yml
+#
+
+
+options:
+
+
+    ### Global Options ###
+
+    bullet-point: "&f-"
+
+    ######### headers title formatting #######
+
+    header-line: "&6&m-------"
+
+    friend-list-title: "Friends"
+    requests-title: "Friend Requests"
+    help-title: "Friends Help"
+
+
+    ##### Friend list formatting ####
+
+    online-color: "&a"
+    offline-color: "&c"
+
+
+
