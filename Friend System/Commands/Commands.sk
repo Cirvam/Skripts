@@ -67,4 +67,4 @@ command /friend <text> [<player>]:
                 showFriendRequestDenyFailed(player)
         
         else:
-            send "&cUsage: /friend <add | accept |deny> <player>" to player
+            send "&cUsage: /friend <add | accept | deny> <player>" to player
