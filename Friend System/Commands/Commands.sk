@@ -1,0 +1,49 @@
+# Commands file
+# Intialized on 08/09/2026
+# Last edited 08/09/2026 by: Cirvam
+#
+# Made by Cirvam
+
+######## TEST COMMANDS ##########
+
+command /testfriend <player>:
+    trigger:
+        if addFriend(player, arg-1) is true:
+            send "Friendship created!" to player
+        else:
+            send "Could not create friendship." to player
+
+
+
+command /testremove <player>:
+    trigger:
+        if removeFriend(player, arg-1) is true:
+            send "Friendship removed!" to player
+        else:
+            send "Could not remove friendship" to player
+
+
+###################################
+
+
+
+#######################################
+# CORE COMMANDS!!!
+# Do not change unless you know what you're doing!!!
+
+
+command /friend add <player>: # Add friend
+    trigger:
+        if sendFriendRequest(player, arg-1) is true:
+            showFriendRequestSent(player, arg-1)
+            showFriendRequestReceived(player,arg-1)
+        else:
+            showFriendRequestFailed(player)
+
+
+command /friend accept <player>:
+    trigger:
+        if acceptFriendRequest(player, arg-1) is true:
+            showFriendRequestAccept(player, arg-1)
+        else:
+            showFriendRequestAcceptFailed(player, arg-1)

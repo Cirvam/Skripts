@@ -9,7 +9,7 @@
 # fancier request messages for example, while keeping the API consistent and so it needs least amount of tweaking.
 
 
-function showFriendRequestSuccess(player: player, target: player): # Notify sender request was successfully sent
+function showFriendRequestSent(player: player, target: player): # Notify sender request was successfully sent
     send "&aFriend request sent to %name of {_target}%!" to {_player}
 
 function showFriendRequestFailed(player: player): # Notify sender request has failed
@@ -17,3 +17,17 @@ function showFriendRequestFailed(player: player): # Notify sender request has fa
 
 function showFriendRequestReceived(sender: player, target: player): # Notify target a request is received.
     send "&e%name of {_sender}% &ahas sent you a friend request!" to {_target}
+
+function showFriendRequestAccept(player: player, sender:player):
+    send "&aYou accepted %name of {_sender}%'s friend request!" to {_player} # Notify player request accepted
+    send "&a%name of {_player}% has accepted your friend request!" to {_sender} # Notify sender request accepted
+
+function showFriendRequestAcceptFailed(player: player, sender: player): # accept failure message
+    send "&cCould not accept friend request from %name of {_sender}%."
+
+function showFriendRequestDeny(player: player, sender: player):
+    send "&cFriend request from %name of {_sender}% declined." to player # Notify player of decline
+    send "&c%name of {_player}% has declined your friend request." to sender # notify sender of decline
+
+function showFriendRequestDenyFailed(player: player):
+    send "&cCould not deny friend request. Something went wrong." to {_player}
