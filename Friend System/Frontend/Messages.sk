@@ -31,3 +31,19 @@ function showFriendRequestDeny(player: player, sender: player):
 
 function showFriendRequestDenyFailed(player: player):
     send "&cCould not deny friend request. Something went wrong." to {_player}
+
+function showFriendRemoved(player: player, target: player): # Show removal message
+    send "&e%{_target}% has been removed from your friends list." to {_player}
+
+function showFriendRemovedFailed(player: player, target: player): # Removal message failed
+    send "&c%{_target}% is not on your friends list." to {_player}
+
+function showFriendRequests(player: player, requests: strings): # Show friend requests.
+    set {_message} to "&6&m-----------------%n1%"
+    set {_message} to "%{_message}%&6Friend Requests%n1%"
+
+    loop {_requests::*}:
+        set {_message} to "%{_message}%&f- &e%getFriendName(loop-value)%%n1%"
+
+    set {_message} to "%{_message}%&6&m-----------------"
+    send {_message} to {_player}

@@ -66,5 +66,15 @@ command /friend <text> [<player>]:
             else:
                 showFriendRequestDenyFailed(player)
         
+
+        else if arg-1 is "remove":
+            if arg-2 is not set:
+                send "&cUsage: /friend remove player" to player
+                stop
+            if removeFriend(player, arg-2) is true:
+                showFriendRemoved(player, arg-2)
+            else:
+                showFriendRemoveFailed(player, arg-2)
+
         else:
-            send "&cUsage: /friend <add | accept | deny> <player>" to player
+            send "&cIncorect usage! See /friend help for all options." to player

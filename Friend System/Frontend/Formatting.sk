@@ -1,0 +1,11 @@
+# Intialized 08/09/2026
+# 
+#
+# By Cirvam
+#
+#
+# Formatting stuff
+
+
+function friendHeader(title: string) :: string:
+    return "&6&m-------%n1%&6%{_title}%%n1%&6&m-------"
