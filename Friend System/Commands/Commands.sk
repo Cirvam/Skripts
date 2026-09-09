@@ -72,7 +72,7 @@ command /friend <text> [<player>]:
                 send "&cUsage: /friend remove player" to player
                 stop
             if removeFriend(player, arg-2) is true:
-                showFriendRemoved(player, arg-2)
+                showFriendRemove(player, arg-2)
             else:
                 showFriendRemoveFailed(player, arg-2)
 
