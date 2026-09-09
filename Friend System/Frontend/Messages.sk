@@ -39,11 +39,27 @@ function showFriendRemoveFailed(player: player, target: player): # Removal messa
     send "&c%{_target}% is not on your friends list." to {_player}
 
 function showFriendRequests(player: player, requests: strings): # Show friend requests.
-    set {_message} to "&6&m-----------------%nl%"
-    set {_message} to "%{_message}%&6Friend Requests%nl%"
+    set {_message} to friendHeader("Friend Requests")
 
     loop {_requests::*}:
-        set {_message} to "%{_message}%&f- &e%getFriendName(loop-value)%%nl%"
+        set {_message} to "%{_message}%%nl%&f - &e%getFriendName(loop-value)%"
 
-    set {_message} to "%{_message}%&6&m-----------------"
+    send {_message} to {_player}
+
+function showFriends(player: player, friends: strings): # Packs players friend into a list and sends list.
+    set {_message} to friendHeader("Friends")
+    set {_online} to ""
+    set {_offline} to ""
+
+    if {_friends::*} is not set: # If no friends, tell user
+        set {_message} to "&cYou don't have any friends yet."
+        send {_message} to {_player}
+        stop
+
+    loop {_friends::*}: # Loop thru online and offline, pack into list with online showing first.
+        if isFriendOnline(loop-value) is true:
+            set {_online} to "%{_online}%%nl%&f- &a%getFriendName(loop-value)%"
+        else:
+            set {_offline} to "%{_offline}%%nl%&f- &c%getFriendName(loop-value)%"
+    set {_message} to "%{_message}%%{_online}%%{_offline}%"
     send {_message} to {_player}

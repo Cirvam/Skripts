@@ -111,12 +111,17 @@ function acceptFriendRequest(target: player, sender: player) :: boolean: # Handl
     if hasFriendRequest({_target}, {_sender}) is not true: # If no friend request from sender, stop.
         return false
 
-    delete {friendRequests::%uuid of {_target}%::%uuid of {_sender}%} # Deletes the pending req if passes the if statement
- 
-    if addFriend({_target}, {sender}) is not true: # Try to add as friends. If fails, return false.
+    if addFriend({_target}, {_sender}) is not true:
         return false
 
-    return true # Returns true on acceptFriendRequest function() Success.
+    delete {friendRequests::%uuid of {_target}%::%uuid of {_sender}%} # Deletes the pending req if passes the if statement
+
+    return true
+ 
+  #  if addFriend({_target}, {sender}) is not true: # Try to add as friends. If fails, return false.
+  #      return false
+
+   # return true # Returns true on acceptFriendRequest function() Success.
 
 
 function denyFriendRequest(target: player, sender: player) :: boolean: # Handles denying friend request
