@@ -1,6 +1,5 @@
-# Intialized 08/09/2026
-# Last edited 08/09/2026 by: Cirvam
 #
+# 
 # By Cirvam
 #
 #
@@ -43,20 +42,23 @@ function showFriendRemoveFailed(player: player, target: player): # Removal messa
 
 
 
+function friendHeader(title: string) :: string: # HEADER for lists.
+    return "%{FriendsAPI::config::header-line}%%nl%%{_title}%%nl%%{FriendsAPI::config::header-line}%"
 
-function showFriendRequests(player: player, requests: strings): # Show friend requests.
-    set {_message} to friendHeader({@requests-title})
+
+function showFriendRequests(player: player, requests: strings): # Show friend requests
+    set {_message} to friendHeader({FriendsAPI::config::request-title})
 
     loop {_requests::*}:
-        set {_message} to "%{_message}%%nl%&f - &e%getFriendName(loop-value)%"
+        set {_requestName} to getFriendName(loop-value)
+        set {_message} to "%{_message}%%nl%%{FriendsAPI::config::bullet-point}% %{FriendsAPI::config::request-color}%%{_requestName}%"
 
     send {_message} to {_player}
 
 
 
-
 function showFriends(player: player, friends: strings): # Packs players friend into a list and sends list.
-    set {_message} to friendHeader({@friends-list-title})
+    set {_message} to friendHeader({FriendsAPI::config::friend-list-title})
     set {_online} to ""
     set {_offline} to ""
 
@@ -67,8 +69,40 @@ function showFriends(player: player, friends: strings): # Packs players friend i
 
     loop {_friends::*}: # Loop thru online and offline, pack into list with online showing first.
         if isFriendOnline(loop-value) is true:
-            set {_online} to "%{_online}%%nl%{@bullet-point} &a%getFriendName(loop-value)%"
+            set {_online} to "%{_online}%%nl%%{FriendsAPI::config::bullet-point}% %{FriendsAPI::config::online-color}%%getFriendName(loop-value)%"
         else:
-            set {_offline} to "%{_offline}%%nl%{@bullet-point} &c%getFriendName(loop-value)%"
+            set {_offline} to "%{_offline}%%nl%%{FriendsAPI::config::bullet-point}% %{FriendsAPI::config::offline-color}%%getFriendName(loop-value)%"
     set {_message} to "%{_message}%%{_online}%%{_offline}%"
     send {_message} to {_player}
+
+
+function showFriendHelp(player: player): # Build and show help menu to player, pulls messages and colors from config.sk
+    set {_message} to friendHeader({FriendsAPI::config::help-title})
+
+    set {_message} to "%{_message}%%nl%%{FriendsAPI::config::help-command-color}%/friend add <player> %{FriendsAPI::config::help-add}%"
+    set {_message} to "%{_message}%%nl%%{FriendsAPI::config::help-command-color}%/friend accept <player> %{FriendsAPI::config::help-accept}%"
+    set {_message} to "%{_message}%%nl%%{FriendsAPI::config::help-command-color}%/friend deny <player> %{FriendsAPI::config::help-deny}%"
+    set {_message} to "%{_message}%%nl%%{FriendsAPI::config::help-command-color}%/friend remove <player> %{FriendsAPI::config::help-remove}%"
+    set {_message} to "%{_message}%%nl%%{FriendsAPI::config::help-command-color}%/friend requests %{FriendsAPI::config::help-requests}%"
+    set {_message} to "%{_message}%%nl%%{FriendsAPI::config::help-command-color}%/friend list %{FriendsAPI::config::help-list}%"
+
+    send {_message} to {_player}
+
+
+### Usage functions ###
+
+
+function showFriendUsageAdd(player: player):
+    send {FriendsAPI::config::usage-add} to {_player}
+
+
+function showFriendUsageAccept(player: player):
+    send {FriendsAPI::config::usage-accept} to {_player}
+
+
+function showFriendUsageDeny(player: player):
+    send {FriendsAPI::config::usage-deny} to {_player}
+
+
+function showFriendUsageRemove(player: player):
+    send {FriendsAPI::config::usage-remove} to {_player}

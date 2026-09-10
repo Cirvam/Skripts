@@ -1,9 +1,9 @@
-# Initalized 09/09/2026
-# Last edited 09/09/2026
+# 
 #
 # By Cirvam
 #
-# This skript will handle reading and forwarding information from Config.yml
+# Essentially acts as a config.yml file. Edit the options here to customize.
+#
 #
 
 
@@ -12,21 +12,95 @@ options:
 
     ### Global Options ###
 
+
+    # Customizable bullet point for the lists
     bullet-point: "&f-"
 
-    ######### headers title formatting #######
+    ######### headers title formatting ################################
 
+    # The line, which makes up the box that contains the title
     header-line: "&6&m-------"
 
-    friend-list-title: "Friends"
-    requests-title: "Friend Requests"
-    help-title: "Friends Help"
+    # Titles for their respective functions
+    friend-list-title: "&6Friends"
+    request-title: "&6Friend Requests"
+    help-title: "&6Friends Help"
 
 
-    ##### Friend list formatting ####
+    ##### Friend list formatting ######################################
 
+    # Set colors for online/offline friends, and pending requests
     online-color: "&a"
     offline-color: "&c"
+    request-color: "&e"
+
+#### Help menu formatting #############################################
+
+
+    # Color of example command in help menu
+    help-command-color: "&e"
+
+
+    # Color and text of command descriptions
+    help-add: "&7Send a friend request"
+    help-accept: "&7Accept a friend request"
+    help-deny: "&7Deny a friend request"
+    help-remove: "&7Remove a friend"
+    help-requests: "&7View pending friend requests"
+    help-list: "&7View your friends list"
+
+### friend command usage messages (This is what comes up if command typed incorrectly) #########
+# e.g "/friend add" returns what is set below because the name isn't set
+
+
+    usage-add: "&cUsage: /friend add <player>"
+    usage-accept: "&cUsage: /friend accept <player>"
+    usage-deny: "&cUsage: /friend deny <player>"
+    usage-remove: "&cUsage: /friend remove <player>"
+
+    invalid-command: "&cIncorrect usage! See /friend help for all options."
+
+####### CONFIG ENDS HERE ##########
 
 
 
+
+### Create global variables ###############################
+
+# I DO NOT RECOMMEND CHANGING ANYTHING HERE UNLESS YOU ABSOLUTELY KNOW WHAT YOU ARE DOING
+
+on load:
+    set {FriendsAPI::config::bullet-point} to {@bullet-point}
+
+    set {FriendsAPI::config::header-line} to {@header-line}
+
+    set {FriendsAPI::config::friend-list-title} to {@friend-list-title}
+    set {FriendsAPI::config::request-title} to {@request-title}
+    set {FriendsAPI::config::help-title} to {@help-title}
+
+    set {FriendsAPI::config::online-color} to {@online-color}
+    set {FriendsAPI::config::offline-color} to {@offline-color}
+    set {FriendsAPI::config::request-color} to {@request-color}
+
+
+### Help menu variables ##############################################
+
+
+    set {FriendsAPI::config::help-command-color} to {@help-command-color}
+
+    set {FriendsAPI::config::help-add} to {@help-add}
+    set {FriendsAPI::config::help-accept} to {@help-accept}
+    set {FriendsAPI::config::help-deny} to {@help-deny}
+    set {FriendsAPI::config::help-remove} to {@help-remove}
+    set {FriendsAPI::config::help-requests} to {@help-requests}
+    set {FriendsAPI::config::help-list} to {@help-list}
+
+
+### Usage global variables ################################################
+
+    set {FriendsAPI::config::usage-add} to {@usage-add}
+    set {FriendsAPI::config::usage-accept} to {@usage-accept}
+    set {FriendsAPI::config::usage-deny} to {@usage-deny}
+    set {FriendsAPI::config::usage-remove} to {@usage-remove}
+
+    set {FriendsAPI::config::invalid-command} to {@invalid-command}

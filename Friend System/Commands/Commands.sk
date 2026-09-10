@@ -1,72 +1,26 @@
 # Commands file
-# Intialized on 08/09/2026
-# Last edited 08/09/2026 by: Cirvam
+# 
 #
 # Made by Cirvam
-
-######## TEST COMMANDS ##########
-
-command /testfriend <player>:
-    trigger:
-        if addFriend(player, arg-1) is true:
-            send "Friendship created!" to player
-        else:
-            send "Could not create friendship." to player
-
-
-
-command /testremove <player>:
-    trigger:
-        if removeFriend(player, arg-1) is true:
-            send "Friendship removed!" to player
-        else:
-            send "Could not remove friendship" to player
-
-
-command /debugfriends:
-    trigger:
-        send "&eYour UUID: &f%uuid of player%" to player
-        send "&eFriends:" to player
-
-        loop {friends::%uuid of player%::*}:
-            send "&f - %loop-index% = %loop-value%" to player
-
-command /debugfriendsreal:
-    trigger:
-        send "Your UUID: %uuid of player%" to player
-        send "Direct friend variable:" to player
-        send "{friends::%uuid of player%::*}" to player
-
-        loop {friends::%uuid of player%::*}:
-            send "Index: %loop-index% | Value: %loop-value%" to player
-
-
-command /cleanupfriends:
-    trigger:
-        delete {friends::12de7fe9-5c04-4b12-9835-6f41be07d597::<none>}
-        delete {friends::<none>::12de7fe9-5c04-4b12-9835-6f41be07d597}
-        send "&aMalformed friend variables removed." to player
-
-
+#
 ###################################
 
-
-
-#######################################
 # CORE COMMANDS!!!
 # Do not change unless you know what you're doing!!!
 
  
 command /friend <text> [<player>]: # Base command
-    usage: &cUsage: /friend <add | accept | deny> <player>
+    permission: friendsapi.use
+    permission message: "&cYou don't have permission to use this command!"
+    usage: &cUsage: /friend <add | accept | deny | remove> <player>
     trigger:
 
 
 ########### friend add command #########
 
         if arg-1 is "add": 
-            if arg-1 is not set:
-                send "&cUsage: /friend add <player>" to player
+            if arg-2 is not set:
+                showFriendUsageAdd(player)
                 stop
             
             if sendFriendRequest(player, arg-2) is true:
@@ -79,7 +33,7 @@ command /friend <text> [<player>]: # Base command
 
         else if arg-1 is "accept":
             if arg-2 is not set:
-                send "&cUsage: /friend accept <player>" to player
+                showFriendUsageAccept(player)
                 stop
 
             if acceptFriendRequest(player, arg-2) is true:
@@ -92,7 +46,7 @@ command /friend <text> [<player>]: # Base command
             
         else if arg-1 is "deny":
             if arg-2 is not set:
-                send "&cUsage: /friend deny <player>" to player
+                showFriendUsageDeny(player)
                 stop
 
             if denyFriendRequest(player, arg-2) is true:
@@ -106,7 +60,7 @@ command /friend <text> [<player>]: # Base command
 
         else if arg-1 is "remove":
             if arg-2 is not set:
-                send "&cUsage: /friend remove player" to player
+                showFriendUsageRemove(player)
                 stop
             if removeFriend(player, arg-2) is true:
                 showFriendRemove(player, arg-2)
@@ -133,7 +87,12 @@ command /friend <text> [<player>]: # Base command
             showFriends(player, {_friends::*})
 
 
+########## Help command #############
+
+        else if arg-1 is "help":
+            showFriendHelp(player)
+
 ######### Run if no /friend arguments are properly fulfilled ########
 
         else:
-            send "&cIncorect usage! See /friend help for all options." to player
+            send {FriendsAPI::config::invalid-command} to player
