@@ -2,9 +2,50 @@
 
 Bit of a large project to made with Skript, but it's my first Skript project so we ball anyways.
 
+
+
 FriendsAPI is a reusable Minecraft friend-system API written in Skript.
 
 It provides the backend functionality for managing friends and friend requests while keeping the player-facing messages separate in a frontend layer. This makes it easier to reuse the API from other Skripts and customize what players see.
+
+---
+
+## Installation
+
+### Requirements
+
+Before installing FriendsAPI, make sure your server has:
+
+- Minecraft server running Paper, Spigot, or another Bukkit-compatible server
+- [Skript](https://github.com/SkriptLang/Skript) installed
+- A recent version of Skript compatible with your Minecraft server
+
+### Installation Steps
+
+1. Download or clone the FriendsAPI repository.
+
+2. Copy the `Friend System` folder into your server's Skript scripts directory:
+
+   `plugins/Skript/scripts/`
+
+3. Your directory should look similar to:
+
+   ```text
+   plugins/
+   └── Skript/
+       └── scripts/
+           └── Friend System/
+               ├── Commands/
+               │   └── Commands.sk
+               ├── Config/
+               │   └── Config.sk
+               ├── FriendsAPI/
+               │   └── API.sk
+               ├── Frontend/
+               │   └── Messages.sk
+               └── README.md
+### Disclaimer
+This Skript project was built with Skript v2.16.2 and is the recommended version to be using.
 
 ---
 
